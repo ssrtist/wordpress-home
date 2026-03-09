@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coco's Yesterday Book</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #book {
+            width: 80%;
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            /* make sure book area has consistent height */
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #book img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .image-container {
+            min-height: 200px; /* reserve enough space for images */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-title {
+            font-size: 2em;
+            line-height: 1.4;
+            min-height: 3em;
+        }
+        .nav {
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .nav.disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+        .button-row {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="book">
+    <div id="bookSelector" style="margin-bottom: 20px;"></div>
+    <div class="page-title" id="pageTitle"></div>
+    <div class="image-container">
+        <img id="pageImage" src="" alt="" />
+    </div>
+    <div class="button-row">
+        <button id="prev" class="nav">Back</button>
+        <button id="next" class="nav">Next</button>
+    </div>
+</div>
+
+<script>
+    const blankImage = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E';
+    
+    let allBooks = [];
+    let currentBook = null;
+    let pages = [];
+    const _preloadedImages = []; // keep references so GC doesn't drop them
+
+    function preloadAllImages(books) {
+        const promises = [];
+        _preloadedImages.length = 0; // clear previous references
+        if (!books || !books.length) return Promise.resolve();
+        books.forEach(book => {
+            if (!book.pages) return;
+            book.pages.forEach(p => {
+                if (!p || !p.image) return;
+                try {
+                    const img = new Image();
+                    const pr = new Promise(resolve => {
+                        img.onload = () => resolve({ img, status: 'ok' });
+                        img.onerror = () => resolve({ img, status: 'error' });
+                    });
+                    img.src = p.image;
+                    _preloadedImages.push(img);
+                    promises.push(pr);
+                } catch (e) {
+                    // ignore any image creation errors
+                }
+            });
+        });
+        if (!promises.length) return Promise.resolve();
+        return Promise.all(promises);
+    }
+    
+    // fetch pages.json on page load
+    fetch('pages.json')
+        .then(resp => resp.json())
+        .then(data => {
+            allBooks = data.books;
+            // show minimal loading hint while images download
+            const pageTitleEl = document.getElementById('pageTitle');
+            const prevTitle = pageTitleEl.textContent;
+            pageTitleEl.textContent = 'Loading images...';
+
+            // preload images and wait for completion before showing first page
+            preloadAllImages(allBooks)
+                .then(() => {
+                    pageTitleEl.textContent = prevTitle;
+                    createBookSelector();
+                    selectBook(allBooks[0].id);
+                })
+                .catch(() => {
+                    // on any unexpected error, still initialize the UI
+                    pageTitleEl.textContent = prevTitle;
+                    createBookSelector();
+                    selectBook(allBooks[0].id);
+                });
+        })
+        .catch(err => console.error('Failed to load pages.json', err));
+
+    const pageTitle = document.getElementById('pageTitle');
+    const pageImage = document.getElementById('pageImage');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    let current = 0;
+
+    function createBookSelector() {
+        const selector = document.getElementById('bookSelector');
+        const label = document.createElement('div');
+        label.style.fontSize = '0.9em';
+        label.style.marginBottom = '10px';
+        label.style.color = '#666';
+        label.textContent = 'Choose a story:';
+        selector.appendChild(label);
+        
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.gap = '10px';
+        buttonContainer.style.justifyContent = 'center';
+        buttonContainer.style.flexWrap = 'wrap';
+        
+        allBooks.forEach(book => {
+            const btn = document.createElement('button');
+            btn.textContent = book.title;
+            btn.className = 'book-select-btn';
+            btn.style.padding = '8px 16px';
+            btn.style.border = '2px solid #ccc';
+            btn.style.borderRadius = '4px';
+            btn.style.cursor = 'pointer';
+            btn.style.fontSize = '0.9em';
+            btn.style.backgroundColor = '#f9f9f9';
+            btn.onclick = () => selectBook(book.id);
+            buttonContainer.appendChild(btn);
+        });
+        
+        selector.appendChild(buttonContainer);
+    }
+
+    function selectBook(bookId) {
+        currentBook = allBooks.find(b => b.id === bookId);
+        pages = currentBook.pages;
+        current = 0;
+        
+        // Update button styles
+        document.querySelectorAll('.book-select-btn').forEach(btn => {
+            btn.style.backgroundColor = btn.textContent === currentBook.title ? '#e0e0e0' : '#f9f9f9';
+            btn.style.borderColor = btn.textContent === currentBook.title ? '#666' : '#ccc';
+        });
+        
+        render();
+    }
+
+    prev.addEventListener('click', () => {
+        if (current > 0) {
+            current--;
+            render();
+        }
+    });
+
+    next.addEventListener('click', () => {
+        if (current < pages.length - 1) {
+            current++;
+            render();
+        }
+    });
+
+    function render() {
+        if (!pages.length) return;
+        const p = pages[current];
+        pageTitle.textContent = p.title;
+        if (p.image) {
+            pageImage.src = p.image;
+            pageImage.style.visibility = 'visible';
+        } else {
+            pageImage.src = '';
+            pageImage.style.visibility = 'hidden';
+        }
+        prev.classList.toggle('disabled', current === 0);
+        next.classList.toggle('disabled', current === pages.length - 1);
+    }
+</script>
+</body>
+</html>

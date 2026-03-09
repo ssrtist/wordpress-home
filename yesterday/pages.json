@@ -1,0 +1,41 @@
+{
+  "books": [
+    {
+      "id": "coco-school",
+      "title": "Yesterday Coco Went to School - 2/27/2026",
+      "pages": [
+        {"title": "Yesterday was Friday.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"},
+        {"title": "Yesterday, in the morning, Coco went to school.", "image": "images/01-go to school.jpg"},
+        {"title": "Yesterday, in the morning, Coco went inside school with Daddy.", "image": "images/02-drop off.jpg"},
+        {"title": "Yesterday, in the afternoon, Daddy picked Coco up from school.", "image": "images/03-pick up.jpg"},
+        {"title": "Yesterday, in the afternoon, Coco went home.", "image": "images/04-go home.jpg"},
+        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"}
+      ]
+    },
+    {
+      "id": "coco-adventure",
+      "title": "Yesterday at Vanderbilt Park - 2/28/2026",
+      "pages": [
+        {"title": "Yesterday was Saturday", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"},
+        {"title": "Yesterday, after lunch, Coco went to Vanderbilt Park.", "image": "images/y03-01.jpg"},
+        {"title": "Yesterday, at the park, Coco played with snow.", "image": "images/y03-02.jpg"},
+        {"title": "Yesterday, after the park, Coco ate dinner.", "image": "images/y03-03.jpg"},
+        {"title": "Yesterday, at night time, Coco went to sleep.", "image": "images/y03-04.jpg"},
+        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"}
+      ]
+    },
+    {
+      "id": "coco-today",
+      "title": "Today Coco Played Basketball - 3/1/2026",
+      "pages": [
+        {"title": "Today, Coco went to play basketball.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"},
+        {"title": "First, Coco saw Coach Emily", "image": "images/y04-01.jpg"},
+        {"title": "Then, Coco played with Matthew, Coco had fun.", "image": "images/y04-02.jpg"},
+        {"title": "Then we went home, but Coco wanted to play more basketball.", "image": "images/y04-03.jpg"},
+        {"title": "Then we played more, and Coco was happy.", "image": "images/y04-04.jpg"},
+        {"title": "At last, in the evening, Coco ate dinner. There was chicken and veggies.", "image": "images/y04-05.jpg"},
+        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"}
+      ]
+    }
+  ]
+}

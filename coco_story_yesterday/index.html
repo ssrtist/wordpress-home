@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Story Book</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="viewer">
+    <button class="nav-btn prev" id="prevBtn" aria-label="Previous page">◀</button>
+    <div class="page-frame">
+      <img id="pageImage" alt="Story page" />
+      <div class="caption" id="caption"></div>
+    </div>
+    <button class="nav-btn next" id="nextBtn" aria-label="Next page">▶</button>
+  </main>
+  <div class="controls">
+    <button id="first">First</button>
+    <button id="last">Last</button>
+    <div class="pager" id="pager"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
