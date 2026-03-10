@@ -109,10 +109,63 @@
         return Promise.all(promises);
     }
     
+    function getRelativeDateLabel(dateStr) {
+        // Parse date string in format "M/D/YYYY" from {{ M/D/YYYY }}
+        const dateMatch = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+        if (!dateMatch) return dateStr;
+        
+        const [, month, day, year] = dateMatch;
+        const eventDate = new Date(Date.UTC(year, month - 1, day)); // month is 0-indexed, use UTC
+        const todayObj = new Date();
+        const today = new Date(Date.UTC(todayObj.getUTCFullYear(), todayObj.getUTCMonth(), todayObj.getUTCDate()));
+        
+        const daysAgo = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
+        
+        if (daysAgo === 0) return 'Today';
+        if (daysAgo === 1) return 'Yesterday';
+        if (daysAgo >= 2 && daysAgo <= 6) return 'This week';
+        if (daysAgo >= 7 && daysAgo <= 13) return 'Last week';
+        if (daysAgo >= 14 && daysAgo <= 20) return '2 weeks ago';
+        
+        // For days beyond 2 weeks, use month-based calculations
+        const monthsAgo = Math.floor(daysAgo / 30);
+        if (monthsAgo === 1) return '1 month ago';
+        if (monthsAgo >= 2 && monthsAgo <= 6) return monthsAgo + ' months ago';
+        if (monthsAgo >= 7 && monthsAgo <= 11) return '7 months ago';
+        
+        const yearsAgo = Math.floor(daysAgo / 365);
+        if (yearsAgo === 1) return 'Last year';
+        if (yearsAgo >= 2 && yearsAgo <= 5) return yearsAgo + ' years ago';
+        
+        return 'many years ago';
+    }
+
+    function replaceDateMarkers(text) {
+        // Replace all {{ date }} markers with relative date labels
+        return text.replace(/\{\{\s*(\d{1,2}\/\d{1,2}\/\d{4})\s*\}\}/g, (match, dateStr) => {
+            return getRelativeDateLabel(dateStr);
+        });
+    }
+
+    function processBooks(books) {
+        // Process all books and pages to replace date markers
+        books.forEach(book => {
+            book.title = replaceDateMarkers(book.title);
+            if (book.pages) {
+                book.pages.forEach(page => {
+                    if (page.title) {
+                        page.title = replaceDateMarkers(page.title);
+                    }
+                });
+            }
+        });
+    }
+
     // fetch pages.json on page load
     fetch('pages.json')
         .then(resp => resp.json())
         .then(data => {
+            processBooks(data.books);
             allBooks = data.books;
             // show minimal loading hint while images download
             const pageTitleEl = document.getElementById('pageTitle');

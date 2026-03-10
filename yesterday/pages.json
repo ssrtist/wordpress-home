@@ -2,39 +2,47 @@
   "books": [
     {
       "id": "coco-school",
-      "title": "Yesterday Coco Went to School - 2/27/2026",
+      "title": "{{ 2/27/2026 }}, Coco Went to School",
       "pages": [
-        {"title": "Yesterday was Friday.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"},
-        {"title": "Yesterday, in the morning, Coco went to school.", "image": "images/01-go to school.jpg"},
-        {"title": "Yesterday, in the morning, Coco went inside school with Daddy.", "image": "images/02-drop off.jpg"},
-        {"title": "Yesterday, in the afternoon, Daddy picked Coco up from school.", "image": "images/03-pick up.jpg"},
-        {"title": "Yesterday, in the afternoon, Coco went home.", "image": "images/04-go home.jpg"},
-        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"}
+        {"title": "{{ 2/27/2026 }}, in the morning, Coco went to school.", "image": "images/01-go to school.jpg"},
+        {"title": "{{ 2/27/2026 }}, in the morning, Coco went inside school with Daddy.", "image": "images/02-drop off.jpg"},
+        {"title": "{{ 2/27/2026 }}, in the afternoon, Daddy picked Coco up from school.", "image": "images/03-pick up.jpg"},
+        {"title": "{{ 2/27/2026 }}, in the afternoon, Coco went home.", "image": "images/04-go home.jpg"},
+        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%2２ height=%２1200%２ fill=%２%23f5f5f5%２/%3E%3C/svg%３E"}
       ]
     },
     {
       "id": "coco-adventure",
-      "title": "Yesterday at Vanderbilt Park - 2/28/2026",
+      "title": "{{ 2/28/2026 }}, Coco at Vanderbilt Park",
       "pages": [
-        {"title": "Yesterday was Saturday", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"},
-        {"title": "Yesterday, after lunch, Coco went to Vanderbilt Park.", "image": "images/y03-01.jpg"},
-        {"title": "Yesterday, at the park, Coco played with snow.", "image": "images/y03-02.jpg"},
-        {"title": "Yesterday, after the park, Coco ate dinner.", "image": "images/y03-03.jpg"},
-        {"title": "Yesterday, at night time, Coco went to sleep.", "image": "images/y03-04.jpg"},
-        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"}
+        {"title": "{{ 2/28/2026 }}, after lunch, Coco went to Vanderbilt Park.", "image": "images/y03-01.jpg"},
+        {"title": "{{ 2/28/2026 }}, at the park, Coco played with snow.", "image": "images/y03-02.jpg"},
+        {"title": "{{ 2/28/2026 }}, after the park, Coco ate dinner.", "image": "images/y03-03.jpg"},
+        {"title": "{{ 2/28/2026 }}, at night time, Coco went to sleep.", "image": "images/y03-04.jpg"},
+        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%2２/%3E%3C/svg%3E"}
       ]
     },
     {
       "id": "coco-today",
-      "title": "Today Coco Played Basketball - 3/1/2026",
+      "title": "{{ 3/1/2026 }}, Coco Played Basketball",
       "pages": [
-        {"title": "Today, Coco went to play basketball.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"},
-        {"title": "First, Coco saw Coach Emily", "image": "images/y04-01.jpg"},
-        {"title": "Then, Coco played with Matthew, Coco had fun.", "image": "images/y04-02.jpg"},
-        {"title": "Then we went home, but Coco wanted to play more basketball.", "image": "images/y04-03.jpg"},
-        {"title": "Then we played more, and Coco was happy.", "image": "images/y04-04.jpg"},
-        {"title": "At last, in the evening, Coco ate dinner. There was chicken and veggies.", "image": "images/y04-05.jpg"},
-        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"}
+        {"title": "{{ 3/1/2026 }}, Coco went to play basketball.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%2２/%3E%3C/svg%3E"},
+        {"title": "{{ 3/1/2026 }}, Coco saw Coach Emily", "image": "images/y04-01.jpg"},
+        {"title": "{{ 3/1/2026 }}, Coco played with Matthew, Coco had fun.", "image": "images/y04-02.jpg"},
+        {"title": "{{ 3/1/2026 }}, Coco went home, and Coco played more basketball.", "image": "images/y04-04.jpg"},
+        {"title": "{{ 3/1/2026 }}, Coco was happy.", "image": "images/y04-03.jpg"},
+        {"title": "{{ 3/1/2026 }}, Coco ate dinner. There was chicken and veggies.", "image": "images/y04-05.jpg"},
+        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%2２/%3E%3C/svg%3E"}
+      ]
+    },
+    {
+      "id": "coco-basketball",
+      "title": "{{ 3/8/2026 }}, Coco Played Basketball",
+      "pages": [
+        {"title": "{{ 3/8/2026 }}, Coco dribble the basketball.", "image": "images/y05-01.jpg"},
+        {"title": "{{ 3/8/2026 }}, Coco shoot the basketball.", "image": "images/y05-02.jpg"},
+        {"title": "{{ 3/8/2026 }}, Coco drink soup.", "image": "images/y05-03.jpg"},
+        {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%2２ width=%2２1600%２ height=%２1200%２%3E%3Crect width=%２1600%２ height=%２1200%２ fill=%２%23f5f5f5%２/%3E%3C/svg%３E"}
       ]
     }
   ]
