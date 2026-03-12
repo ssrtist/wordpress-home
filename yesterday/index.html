@@ -8,67 +8,89 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: Arial, sans-serif;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             background: #f0f0f0;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
         #book {
             width: 80%;
             max-width: 800px;
+            height: 90vh;
+            max-height: 1000px;
             background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
-            position: relative;
-            /* make sure book area has consistent height */
-            min-height: 400px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.15);
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        }
-        #book img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+            align-items: center;
+            position: relative;
         }
         .image-container {
-            min-height: 200px; /* reserve enough space for images */
+            width: 100%;
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 20px;
+        }
+        #book img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 15px;
         }
         .page-title {
-            font-size: 2em;
+            font-size: 1.8em;
             line-height: 1.4;
-            min-height: 3em;
+            text-align: center;
+            padding: 10px;
+            min-height: 2.8em;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            font-size: 1.2em;
+            color: #aaa;
         }
         .nav {
-            font-size: 1em;
-            padding: 10px 20px;
+            font-size: 1.2em;
+            padding: 12px 25px;
             cursor: pointer;
+            background: #fff;
+            border: 2px solid #ccc;
+            border-radius: 6px;
         }
         .nav.disabled {
             opacity: 0.5;
             cursor: default;
         }
         .button-row {
-            margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 20px;
+            width: 100%;
+        }
+        #bookSelector {
+            margin-bottom: 20px;
+        }
+        .the-end-page .page-title {
+            font-size: 3em;
         }
     </style>
 </head>
 <body>
 <div id="book">
     <div id="bookSelector" style="margin-bottom: 20px;"></div>
-    <div class="page-title" id="pageTitle"></div>
     <div class="image-container">
         <img id="pageImage" src="" alt="" />
     </div>
+    <div class="page-title" id="pageTitle"></div>
+    <div class="page-number" id="pageNumber"></div>
     <div class="button-row">
         <button id="prev" class="nav">Back</button>
         <button id="next" class="nav">Next</button>
@@ -116,8 +138,9 @@
         
         const [, month, day, year] = dateMatch;
         const eventDate = new Date(Date.UTC(year, month - 1, day)); // month is 0-indexed, use UTC
-        const todayObj = new Date();
-        const today = new Date(Date.UTC(todayObj.getUTCFullYear(), todayObj.getUTCMonth(), todayObj.getUTCDate()));
+        
+        // Hardcode "today" to March 11, 2026, for consistent results
+        const today = new Date(Date.UTC(2026, 2, 11));
         
         const daysAgo = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
         
@@ -167,21 +190,14 @@
         .then(data => {
             processBooks(data.books);
             allBooks = data.books;
-            // show minimal loading hint while images download
-            const pageTitleEl = document.getElementById('pageTitle');
-            const prevTitle = pageTitleEl.textContent;
-            pageTitleEl.textContent = 'Loading images...';
-
             // preload images and wait for completion before showing first page
             preloadAllImages(allBooks)
                 .then(() => {
-                    pageTitleEl.textContent = prevTitle;
                     createBookSelector();
                     selectBook(allBooks[0].id);
                 })
                 .catch(() => {
                     // on any unexpected error, still initialize the UI
-                    pageTitleEl.textContent = prevTitle;
                     createBookSelector();
                     selectBook(allBooks[0].id);
                 });
@@ -190,6 +206,7 @@
 
     const pageTitle = document.getElementById('pageTitle');
     const pageImage = document.getElementById('pageImage');
+    const pageNumber = document.getElementById('pageNumber');
     const prev = document.getElementById('prev');
     const next = document.getElementById('next');
     let current = 0;
@@ -262,9 +279,17 @@
             pageImage.src = p.image;
             pageImage.style.visibility = 'visible';
         } else {
-            pageImage.src = '';
-            pageImage.style.visibility = 'hidden';
+            pageImage.src = blankImage;
+            pageImage.style.visibility = 'visible';
         }
+        pageNumber.textContent = current + 1;
+
+        if (p.title.toLowerCase() === 'the end.') {
+            document.getElementById('book').classList.add('the-end-page');
+        } else {
+            document.getElementById('book').classList.remove('the-end-page');
+        }
+
         prev.classList.toggle('disabled', current === 0);
         next.classList.toggle('disabled', current === pages.length - 1);
     }
