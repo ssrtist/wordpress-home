@@ -53,6 +53,24 @@
         {"title": "{{ 3/10/2026 }}, Coco practiced typing with Yooki.", "image": "images/y06-02.jpg"},
         {"title": "The end.", "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%2２ width=%2２1600%２ height=%２1200%２%3E%3Crect width=%２1600%２ height=%２1200%２ fill=%２%23f5f5f5%２/%3E%3C/svg%３E"}
       ]
+    },
+    {
+      "id": "coco-y07",
+      "title": "{{ 3/13/2026 }}, Coco's Day",
+      "pages": [
+        {
+          "title": "{{ 3/13/2026 }}, Coco had lunch.",
+          "image": "images/y07-01-coco-lunch.jpg"
+        },
+        {
+          "title": "{{ 3/13/2026 }}, Coco played Jenga.",
+          "image": "images/y07-02-coco-jenga.jpg"
+        },
+        {
+          "title": "The end.",
+          "image": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221600%22 height=%221200%22%3E%3Crect width=%221600%22 height=%221200%22 fill=%22%23f5f5f5%22/%3E%3C/svg%3E"
+        }
+      ]
     }
   ]
 }

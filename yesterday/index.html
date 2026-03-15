@@ -130,37 +130,45 @@
         if (!promises.length) return Promise.resolve();
         return Promise.all(promises);
     }
-    
+
+    const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+
     function getRelativeDateLabel(dateStr) {
-        // Parse date string in format "M/D/YYYY" from {{ M/D/YYYY }}
+        // Parse date string in format "M/D/YYYY"
         const dateMatch = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
         if (!dateMatch) return dateStr;
-        
+
         const [, month, day, year] = dateMatch;
-        const eventDate = new Date(Date.UTC(year, month - 1, day)); // month is 0-indexed, use UTC
+        const eventDate = new Date(Date.UTC(year, month - 1, day));
         
-        // Hardcode "today" to March 11, 2026, for consistent results
-        const today = new Date(Date.UTC(2026, 2, 11));
+        // Use Saturday, March 14, 2026, as "today" for consistent results
+        const today = new Date(Date.UTC(2026, 2, 14));
+
+        // Calculate the difference in days
+        const diffDays = Math.round((eventDate - today) / (1000 * 60 * 60 * 24));
+
+        // Intl.RelativeTimeFormat can't format 0 days, so handle 'Today' separately.
+        if (diffDays === 0) return 'Today';
+
+        // Decide the unit based on the magnitude of the difference.
+        const diffAbsDays = Math.abs(diffDays);
+
+        if (diffAbsDays < 7) {
+            return rtf.format(diffDays, 'day');
+        }
         
-        const daysAgo = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
+        if (diffAbsDays < 30) {
+            const diffWeeks = Math.round(diffDays / 7);
+            return rtf.format(diffWeeks, 'week');
+        }
         
-        if (daysAgo === 0) return 'Today';
-        if (daysAgo === 1) return 'Yesterday';
-        if (daysAgo >= 2 && daysAgo <= 6) return 'This week';
-        if (daysAgo >= 7 && daysAgo <= 13) return 'Last week';
-        if (daysAgo >= 14 && daysAgo <= 20) return '2 weeks ago';
+        if (diffAbsDays < 365) {
+            const diffMonths = Math.round(diffDays / 30.44);
+            return rtf.format(diffMonths, 'month');
+        }
         
-        // For days beyond 2 weeks, use month-based calculations
-        const monthsAgo = Math.floor(daysAgo / 30);
-        if (monthsAgo === 1) return '1 month ago';
-        if (monthsAgo >= 2 && monthsAgo <= 6) return monthsAgo + ' months ago';
-        if (monthsAgo >= 7 && monthsAgo <= 11) return '7 months ago';
-        
-        const yearsAgo = Math.floor(daysAgo / 365);
-        if (yearsAgo === 1) return 'Last year';
-        if (yearsAgo >= 2 && yearsAgo <= 5) return yearsAgo + ' years ago';
-        
-        return 'many years ago';
+        const diffYears = Math.round(diffDays / 365.25);
+        return rtf.format(diffYears, 'year');
     }
 
     function replaceDateMarkers(text) {
